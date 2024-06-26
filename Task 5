@@ -1,0 +1,27 @@
+from scapy.all import *
+
+# Define the packet handler function
+def packet_handler(packet):
+    if IP in packet:
+        ip_packet = packet[IP]
+        print(f"Source IP: {ip_packet.src}")
+        print(f"Destination IP: {ip_packet.dst}")
+
+        if TCP in packet:
+            tcp_packet = packet[TCP]
+            print(f"Protocol: TCP")
+            print(f"Source Port: {tcp_packet.sport}")
+            print(f"Destination Port: {tcp_packet.dport}")
+            print(f"Payload Data: {tcp_packet.payload}")
+
+        elif UDP in packet:
+            udp_packet = packet[UDP]
+            print(f"Protocol: UDP")
+            print(f"Source Port: {udp_packet.sport}")
+            print(f"Destination Port: {udp_packet.dport}")
+            print(f"Payload Data: {udp_packet.payload}")
+
+        print("=" * 40)
+
+# Start sniffing packets
+sniff(filter="ip", prn=packet_handler)
